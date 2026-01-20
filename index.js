@@ -17,16 +17,17 @@ app.get("/api/hello",(req,res)=>{
 
 //middleware
 app.use(express.json())
-app.use((req,res,next)=>{
-    console.log("This is the middleware")
-    next()
-})
+
 
 
 app.use("/api/auth",authRoutes)
 app.use("/api/users",usersRoutes)
 app.use("/api/hotels",hotelsRoutes)
 app.use("/api/rooms",roomsRoutes)
+
+app.use((err,req,res,next)=>{
+    return res.status(200).json("Error from ErrorHandler")
+})
 
 app.listen(PORT,()=>{
     connectToDb()

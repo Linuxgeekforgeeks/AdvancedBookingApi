@@ -47,12 +47,13 @@ router.get("/:id", async (req, res) => {
   }
 });
 //GET ALL
-router.get("/", async (req, res,next) => {
+router.get("/", async (req, res) => {
+
   try {
-    const allHotels = await Hotel.find();
+    const allHotels = await Hotel.find(dsfasdfa);
     res.status(200).json(allHotels);
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    next(err);
   }
 });
 
