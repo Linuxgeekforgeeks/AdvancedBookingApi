@@ -52,13 +52,10 @@ router.get("/", async (req, res,next) => {
 
   const failed=true;
 
-  const err=new Error()
 
-  err.status=404;
-  err.message="Sorry not found"
+const constomErr=createError(563,"This is costom Error")
 
-
-  if(failed){ return next()}
+  if(failed){ return next(constomErr)}
 
   try {
     const allHotels = await Hotel.find();
