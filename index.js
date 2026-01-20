@@ -17,6 +17,10 @@ app.get("/api/hello",(req,res)=>{
 
 //middleware
 app.use(express.json())
+app.use((req,res,next)=>{
+    console.log("This is the middleware")
+    next()
+})
 
 
 app.use("/api/auth",authRoutes)
