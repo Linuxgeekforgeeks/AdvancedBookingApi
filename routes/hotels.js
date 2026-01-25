@@ -1,68 +1,27 @@
 import express from "express";
-import Hotel from "../models/Hotel.js";
-import { createError } from "../lib/error.js";
+import {
+  createHotel,
+  updateHotel,
+  deleteHotel,
+  getHotel,
+  getAllHotels,
+} from "../controllers/hotel.js";
 
 const router = express.Router();
-//CREATE
-router.post("/", async (req, res) => {
-  const newHotel = new Hotel(req.body);
 
-  try {
-    const savedHotel = await newHotel.save();
+// CREATE
+router.post("/", createHotel);
 
-    res.status(200).json(savedHotel);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-//UPDATE
-router.put("/:id", async (req, res) => {
-  try {
-    const updatedHotel = await Hotel.findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    },{new:true});
-    res.status(200).json(updatedHotel);
-  } catch (error) {
-    throw error;
-  }
-});
-//DELETE
-router.delete("/:id", async (req, res) => {
-  try {
-    const updatedHotel = await Hotel.findByIdAndDelete(req.params.id);
-    res
-      .status(200)
-      .json({ message: "Hotel deleted Successfully.", status: true });
-  } catch (error) {
-    throw error;
-  }
-});
-//GET
+// UPDATE
+router.put("/:id", updateHotel);
 
-router.get("/:id", async (req, res) => {
-  try {
-    const hotel = await Hotel.findById({ _id: req.params.id });
-    res.status(200).json(hotel);
-  } catch (error) {
-    throw error;
-  }
-});
-//GET ALL
-router.get("/", async (req, res,next) => {
+// DELETE
+router.delete("/:id", deleteHotel);
 
-  const failed=true;
+// GET ONE
+router.get("/:id", getHotel);
 
-
-const constomErr=createError(563,"This is costom Error")
-
-  if(failed){ return next(constomErr)}
-
-  try {
-    const allHotels = await Hotel.find();
-    res.status(200).json(allHotels);
-  } catch (err) {
-    next(err);
-  }
-});
+// GET ALL
+router.get("/", getAllHotels);
 
 export default router;

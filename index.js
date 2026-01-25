@@ -29,7 +29,7 @@ app.use((err, req, res, next) => {
   console.log(errorMessage);
   return res
     .status(errorStatus)
-    .json({ success: true, status: errorStatus, message: errorMessage,stack:err.stack});
+    .json({ success:false, status: errorStatus, message: errorMessage,stack:err.stack});
 });
 
 app.listen(PORT, () => {
